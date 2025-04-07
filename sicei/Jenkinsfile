@@ -17,7 +17,7 @@ pipeline {
                      bat """
                         docker stop nest-jenkins || echo "No hay contenedor para detener"
                         docker rm nest-jenkins || echo "No hay contenedor para eliminar"
-                        docker run -p 3000:3000 --name nest-jenkins -d sicei-app-pipeline:${env.BUILD_ID}
+                        docker run -p 3000:3000 --name nest-jenkins -d sicei-app-pipeline-v${env.BUILD_ID}
                     """
                 }
             }
