@@ -14,7 +14,11 @@ pipeline {
             steps {
                 script {                   
                     echo 'Iniciando el contenedor...'
-                    bat "docker run -p 3000:3000 --name nest -d sicei-app-pipeline-v${env.BUILD_ID}"
+                     bat """
+                        docker stop nest || echo "No hay contenedor para detener"
+                        docker rm nest || echo "No hay contenedor para eliminar"
+                        docker run -p 3000:3000 --name nest -d sicei-app-pipeline:${env.BUILD_ID}
+                    """
                 }
             }
         }
