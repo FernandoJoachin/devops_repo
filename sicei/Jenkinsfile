@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                script {
+                    if (fileExists('.git')) {
+                        echo 'Repositorio ya existe, haciendo git pull...'
+                        bat 'git pull origin ADA9_dockerfile-rest-app'
+                    } else {
+                        echo 'Repositorio no encontrado, haciendo git clone...'
+                        git branch: 'ADA9_dockerfile-rest-app', url: 'https://github.com/FernandoJoachin/devops_repo.git'
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    bat "docker build -t sicei-app-pipeline-v:${env.BUILD_ID} ."
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {                   
+                    echo 'Iniciando el contenedor...'
+                    bat "docker run -p 3000:3000 --name nest -d ssicei-app-pipeline-v${env.BUILD_ID}"
+                }
+            }
+        }
+    }
+}
