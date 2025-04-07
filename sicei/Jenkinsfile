@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {                   
                     echo 'Iniciando el contenedor...'
-                    bat "docker run -p 3000:3000 --name nest -d ssicei-app-pipeline-v${env.BUILD_ID}"
+                    bat "docker run -p 3000:3000 --name nest -d sicei-app-pipeline-v${env.BUILD_ID}"
                 }
             }
         }
