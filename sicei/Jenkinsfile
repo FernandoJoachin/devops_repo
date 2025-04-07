@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    bat "cd sicei"
                     bat "docker build -t sicei-app-pipeline-v:${env.BUILD_ID} ."
                 }
             }
